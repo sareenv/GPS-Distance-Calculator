@@ -1,11 +1,9 @@
 package com.company;
 
 import java.util.InputMismatchException;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
-
 
     public static class Coordinates {
 
@@ -33,19 +31,6 @@ public class Main {
             return latitude;
         }
 
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (!(o instanceof Coordinates)) return false;
-            Coordinates that = (Coordinates) o;
-            return getLongitude() == that.getLongitude() && getLatitude() == that.getLatitude();
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(getLongitude(), getLatitude());
-        }
     }
 
 
@@ -85,20 +70,27 @@ public class Main {
     public static void main(String[] args) {
 
         try (Scanner snc = new Scanner(System.in)) {
+
             System.out.println("Enter the longitude of gps coordinate point 1 ");
-            snc.nextLong();
+            double longitude1 = snc.nextDouble();
+            System.out.println("Enter the latitude of gps coordinate point 1");
+            double latitude1 = snc.nextDouble();
+
+            System.out.println("Enter the longitude of gps coordinate point 2 ");
+            double longitude2 = snc.nextDouble();
             System.out.println("Enter the latitude of gps coordinate point 2");
-            snc.nextLong();
+            double latitude2 = snc.nextDouble();
+
+            Main main = new Main();
+            Coordinates c1 = new Coordinates(longitude1, latitude1);
+            Coordinates c2 = new Coordinates(longitude2, latitude2);
+            double estimatedDistance = main.calculateDistance(c1, c2, true);
+            System.out.println("Estimated Distance is : " + estimatedDistance);
+
         } catch (InputMismatchException exception) {
-            System.out.println("Exception: " + exception.getMessage());
+            System.out.println("Exception: Input Mismatched" );
         }
 
-
-        Main main = new Main();
-        Coordinates c1 = new Coordinates(0, 51.5);
-        Coordinates c2 = new Coordinates(-77.1, 38.8);
-        double estimatedDistance = main.calculateDistance(c1, c2, true);
-        System.out.println("Estimated Distance is : " + estimatedDistance);
     }
 
 }
